@@ -1,10 +1,9 @@
-# Docker ELK stack
+# Docker ELK stack with Curator
 
-[![Join the chat at https://gitter.im/deviantony/fig-elk](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/deviantony/fig-elk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Thanks to deviantony [https://github.com/deviantony/docker-elk] for base version.
 
 Run the latest version of the ELK (Elasticseach, Logstash, Kibana) stack with Docker and Docker-compose.
 
-It will give you the ability to analyze any data set by using the searching/aggregation capabilities of Elasticseach and the visualization power of Kibana.
 
 Based on the official images:
 
@@ -169,3 +168,20 @@ elasticsearch:
 ```
 
 This will store elasticsearch data inside `/path/to/storage`.
+
+# Curator
+
+## How long you want to keep the indices?
+
+The data stored can be deleted for certain number of days. You can specify MAX_INDEX_AGE for how long you want to keep the data indices.
+
+```yml
+curator: 
+  build: curator/
+  links: 
+    - elasticsearch
+  environment:
+    ELASTICSEARCH_HOST: elasticsearch
+    ELASTICSEARCH_PORT: 9200
+    MAX_INDEX_AGE: 2
+```
